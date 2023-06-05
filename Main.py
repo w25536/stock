@@ -9,33 +9,33 @@ data = pd.read_csv('./TSLA.csv')
 print(data.shape)
 print(data.sample(7))
 
-data['date'] = pd.to_datetime(data['date'])
+data['Date'] = pd.to_datetime(data['Date'])
 data.info()
 
 # Exploratory Data Analysis
 
 company = 'TESLA'
 
-plt.plot(data['date'], data['close'], c="r", label="close", marker="+")
-plt.plot(data['date'], data['open'], c="g", label="open", marker="^")
+plt.plot(data['Date'], data['Close'], c="r", label="close", marker="+")
+plt.plot(data['Date'], data['Open'], c="g", label="open", marker="^")
 plt.title(f'{company}')
 plt.legend()
 plt.tight_layout()
 
 plt.show()
 
-plt.plot(data['date'], data['volume'], c='purple', marker='*')
+plt.plot(data['Date'], data['Volume'], c='purple', marker='*')
 plt.title(f"{company} Volume")
 plt.tight_layout()
 
-prediction_range = data.loc[(data['date'] > datetime(2013, 1, 1)) & (data['date'] < datetime(2018, 1, 1))]
-plt.plot(data['date'], data['close'])
+prediction_range = data.loc[(data['Date'] > datetime(2013, 1, 1)) & (data['Date'] < datetime(2018, 1, 1))]
+plt.plot(data['Date'], data['Close'])
 plt.xlabel("Date")
 plt.ylabel("Close")
 plt.title("TESLA Stock Prices")
 plt.show()
 
-close_data = data.filter(['close'])
+close_data = data.filter(['Close'])
 dataset = close_data.values
 training = int(np.ceil(len(dataset) * .95))
 print(training)
@@ -91,11 +91,11 @@ test = data[training:]
 test['Predictions'] = predictions
 
 plt.figure(figsize=(10, 8))
-plt.plot(train['date'], train['close'])
-plt.plot(test['date'], test[['close', 'Predictions']])
+plt.plot(train['Date'], train['Close'])
+plt.plot(test['Date'], test[['Close', 'Predictions']])
 plt.title(f'{company} Stock Close Price')
-plt.xlabel('date')
-plt.ylabel("close")
+plt.xlabel('Date')
+plt.ylabel("Close")
 plt.legend(['Train', 'Test', 'Predictions'])
 
 plt.show()
